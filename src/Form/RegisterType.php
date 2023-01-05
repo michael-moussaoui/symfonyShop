@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,19 +35,22 @@ class RegisterType extends AbstractType
                     'placeholder' => 'example@email.com'
                 ]
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'votre mot de passe',
-                'attr' => [
-                    'placeholder' => 'Choisissez un mot de passe',
-                ]
+            // ->add('password', PasswordType::class, [
+            //     'label' => 'votre mot de passe',
+            //     'attr' => [
+            //         'placeholder' => 'Choisissez un mot de passe',
+            //     ]
 
-            ])
-            ->add('password_confirm', PasswordType::class, [
-                'label' => 'confirmer votre mot de passe',
-                'mapped' => false,
-                'attr' => [
-                    'placeholder' => 'confirmer votre mot de passe',
-                ]
+            // ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Le mot de passe et la confirmation se sont pas identiques',
+                'label' => 'votre mot de passe',
+                'required' => true,
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmer votre mot de passe'],
+
+
 
             ])
 
